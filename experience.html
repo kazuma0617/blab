@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>体験コーナー</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🔐 暗号体験コーナー</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="members.html">メンバー</a></li>
+        <li><a href="research.html">研究内容</a></li>
+        <li><a href="schedule.html">年間予定</a></li>
+        <li><a href="experience.html">暗号体験コーナー</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="experience">
+      <h2>シーザー暗号体験</h2>
+      <p>文字列とシフト値を入力して、暗号化してみよう！</p>
+
+      <input type="text" id="plainText" placeholder="ここに文字を入力">
+      <input type="number" id="shiftValue" placeholder="シフト値" value="3" min="0" max="25">
+      <button onclick="encrypt()">暗号化</button>
+
+      <h3>🔒 暗号文:</h3>
+      <p id="cipherText"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 暗号体験ラボ</p>
+  </footer>
+
+  <script>
+    function encrypt() {
+      const shift = parseInt(document.getElementById("shiftValue").value) || 0;
+      const text = document.getElementById("plainText").value;
+      let result = "";
+
+      for (let i = 0; i < text.length; i++) {
+        let char = text[i];
+        if (char.match(/[a-z]/i)) {
+          const code = text.charCodeAt(i);
+          // 大文字
+          if (code >= 65 && code <= 90) {
+            char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
+          }
+          // 小文字
+          else if (code >= 97 && code <= 122) {
+            char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
+          }
+        }
+        result += char;
+      }
+
+      document.getElementById("cipherText").textContent = result;
+    }
+  </script>
+</body>
+</html>
